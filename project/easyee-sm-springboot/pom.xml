@@ -3,7 +3,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<!-- jar runtime pom -->
-	
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.easyproject</groupId>
 	<artifactId>easyee-sm-springboot</artifactId>
@@ -14,8 +14,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.7</java.version>
-		<tomcat.version>8.5.8</tomcat.version>
+		<java.version>1.8</java.version>
+		<tomcat.version>7.0.88</tomcat.version>
 
 		<spring.version>4.3.4.RELEASE</spring.version>
 		<springboot.version>1.4.2.RELEASE</springboot.version>
@@ -114,7 +114,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- The dependencies jrobin (included in javamelody-core) and if you wish 
+		<!-- The dependencies jrobin (included in javamelody-core) and if you wish
 			xstream as an option for the xml and json export are: -->
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
@@ -212,7 +212,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>cn.easyproject</groupId> <artifactId>ojdbc6</artifactId> 
+		<!-- <dependency> <groupId>cn.easyproject</groupId> <artifactId>ojdbc6</artifactId>
 			<version>${oracle.version}</version> </dependency> -->
 		<!-- Druid -->
 		<dependency>
@@ -346,25 +346,41 @@
 	<build>
 		<!-- <finalName>easyee-sm-springboot</finalName> -->
 		<plugins>
+		    <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
 
 			<!-- Package as an executable jar -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+                    <execution>
+                       <goals>
+                          <goal>repackage</goal>
+                       </goals>
+                       <configuration>
+                           <mainClass>cn.easyproject.easyee.sm.EasyEEJarApplication</mainClass>
+                       </configuration>
+                    </execution>
+                </executions>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<encoding>UTF-8</encoding>
 					<compilerArguments>
 						<extdirs>src\main\webapp\WEB-INF\lib</extdirs>
 					</compilerArguments>
 				</configuration>
 			</plugin>
+
 		</plugins>
 		<resources>
 			<!-- JSP 打 jar 包时将jsp文件拷贝到META-INF目录下 -->
